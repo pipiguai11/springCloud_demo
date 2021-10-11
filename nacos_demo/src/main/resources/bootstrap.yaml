@@ -1,0 +1,28 @@
+
+spring:
+  profiles:
+    active: dev #@profile.active@
+  application:
+    name: nacos-demo #@artifactId@
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 #@nacos.host@:@nacos.port@
+        # 这个命名空间设置的时候要注意了，设置的不是它的名称，而应该是它的ID
+        namespace: cde61379-0d83-4064-8508-405b7eb0f04c #4f18d594-53a1-48ce-972e-96258136f39a #myNamespace
+      config:
+        server-addr: 127.0.0.1:8848 #@nacos.host@:@nacos.port@
+        namespace: cde61379-0d83-4064-8508-405b7eb0f04c #4f18d594-53a1-48ce-972e-96258136f39a #myNamespace
+        file-extension: yaml
+
+# 配置com.alibaba.nacos.client.config.impl下的类的日志输出级别（包括ClientWorker等），否则控制台会一直刷配置文件的内容
+logging:
+  level:
+    com:
+      alibaba:
+        nacos:
+          client:
+            config:
+              impl: WARN
