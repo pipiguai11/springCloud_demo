@@ -29,6 +29,7 @@
         <spring.cloud.gateway>3.0.4</spring.cloud.gateway>
         <spring.cloud.bootstrap>3.0.3</spring.cloud.bootstrap>
         <spring.cloud.loadbalancer>3.0.3</spring.cloud.loadbalancer>
+        <fastjson.version>1.2.68</fastjson.version>
     </properties>
 
 
@@ -92,6 +93,12 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-loadbalancer</artifactId>
                 <version>${spring.cloud.loadbalancer}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
         </dependencies>
