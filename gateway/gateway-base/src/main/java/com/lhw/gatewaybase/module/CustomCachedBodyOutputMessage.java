@@ -1,4 +1,4 @@
-package com.lhw.gateway.module;
+package com.lhw.gatewaybase.module;
 
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
 import org.springframework.http.HttpHeaders;

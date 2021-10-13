@@ -1,12 +1,12 @@
-package com.lhw.gateway.filter;
+package com.lhw.gatewaybase.filter;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.fastjson.JSON;
-import com.lhw.gateway.factory.AbstractRequestFactory;
-import com.lhw.gateway.factory.WebFluxRequestFactory;
-import com.lhw.gateway.module.CustomCachedBodyOutputMessage;
-import com.lhw.gateway.module.Request;
-import com.lhw.gateway.module.RequestContainer;
+import com.lhw.gatewaybase.factory.AbstractRequestFactory;
+import com.lhw.gatewaybase.factory.WebFluxRequestFactory;
+import com.lhw.gatewaybase.module.CustomCachedBodyOutputMessage;
+import com.lhw.gatewaybase.module.Request;
+import com.lhw.gatewaybase.module.RequestContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

@@ -1,7 +1,7 @@
-package com.lhw.gateway.factory;
+package com.lhw.gatewaybase.factory;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
-import com.lhw.gateway.module.Request;
+import com.lhw.gatewaybase.module.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

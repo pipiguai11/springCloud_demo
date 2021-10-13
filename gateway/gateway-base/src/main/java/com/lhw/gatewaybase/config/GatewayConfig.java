@@ -1,4 +1,4 @@
-//package com.lhw.gateway.config;
+package com.lhw.gatewaybase.config;//package com.lhw.gateway.config;
 //
 //import org.springframework.cloud.gateway.route.RouteLocator;
 //import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;

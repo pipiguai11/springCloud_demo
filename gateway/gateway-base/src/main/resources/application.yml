@@ -1,0 +1,42 @@
+server:
+  port: 8902
+
+spring:
+  application:
+    name: nacos-gateway-demo-2
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: cde61379-0d83-4064-8508-405b7eb0f04c
+    gateway:
+      routes:
+        - id: host-route
+          # 注意：这里的这个uri只能填写成ip:port的写法，或者直接写注册中心的服务地址【lb://service-provider 匹配后提供服务的路由地址，这里的service-provider是服务名，如果要用这种方式则需要引入loadbalancer依赖】
+          # 当路由适配后，会将这个uri地址替换请求中的ip和端口，其他的请求地址不变（如http://localhost:8901/json/parse/array/v2），则自动转发到（http://localhost:30010/json/parse/array/v2）
+          uri: lb://nacos-gateway-demo-1 #lb://nacos-demo #http://localhost:30010
+          predicates:
+#            - Path=/json/parse/array  # 匹配url路径
+#            - After=2017-01-20T17:42:47.789+08:00  # 时间点之后的所有请求
+#            - Before=2022-01-20T17:42:47.789+08:00  # 时间点之前的所有请求
+#            - Between=2017-01-20T17:42:47.789+08:00, 2022-01-20T17:42:47.789+08:00  # 时间段之间的所有请求
+#            - Cookie=name, lhw  # 匹配Cookie，当Cookie中存在name=lhw的键值对的时候，则匹配该路由
+#            - Header=X-Request-Id, \d+  # 匹配请求头中的X-Request-Id，当请求头中包含X-Request-Id键，且它的值匹配后面的正则时，匹配该路由
+#            - Host=**  # 任意请求都能匹配，可以指定具体ip【这里好像只能指定域名，写ip测试不通过】
+            - Method=GET,POST,DELETE  # 根据请求类型匹配，想要接收什么类型的请求，就直接在这里配置即可
+#            - Query=name  # 请求中包含name的查询参数则匹配，如：http://localhost:8901/get?name=lhw
+#            - RemoteAddr=192.168.0.124/24, 127.0.0.1/24  # 匹配ip地址
+#            - Weight=group1, 8  # 权重，表示在group1这个组中，此路由占用的权重为百分之八十，也就是说百分之八十的请求会匹配到此路由【同组多个路由的情况下】
+          filters:
+#            - AddRequestHeader=X-Request-lhw, helloWorld  # 将X-Request-lhw = helloWorld 这个键值对添加到下游请求头中【也就是转发过去后请求头会带上】
+#            - AddRequestParameter=name, lhw  # 转发请求时在请求体中加入此查询参数
+#            - AddResponseHeader=name, lhw  # 转发时设置将其添加到下游请求的响应头中，最终返回给客户端的响应头中会带上
+#            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin  # 当网关响应头中的CORS逻辑添加了这两项配置，且下游的响应头中也添加了这两项配置，那么这个filter将删除他们的重复值
+#            - MapRequestHeader=newKey, X-Request-Red  # 采用fromHeader和toHeader的方式来处理这两个参数，首先创建一个newKey的键，然后去网关的请求体中检索是否存在X-Request-Red这个键的配置，如果存在，那就把X-Request-Red的值提取出来赋值给newKey，反之则无影响【总的来说，就是往下游请求体中添加了一个newKey的配置】
+#            - PrefixPath=/prepath  # 添加路径前缀，作为所有匹配请求路径的前缀。如，/hello将会把请求转发到/prepath/hello。
+#            - PreserveHostHeader  # 发送原始请求体，而不是客户端自定义的请求体
+#            - RedirectTo=302, http://localhost:30010  # 匹配后，对指定的路由发起3xx跳转（跳到http://localhost:30010）
+#            - RemoveRequestHeader=X-Request-Red  # 将请求头中的指定key删掉之后再转发到下游服务
+#            - RemoveResponseHeader=X-Response-Foo  # 将响应头中的指定key删掉
+#            - RemoveRequestParameter=name  # 删除请求参数
+            - RewritePath=/path/?(?<segment>.*), /$\{segment}  # 路径重写，如/path/test，将会转发到/test，由于yaml的规范，需要把“$”替换成“$\”

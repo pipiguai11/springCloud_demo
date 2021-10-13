@@ -1,4 +1,4 @@
-package com.lhw.gateway.module;
+package com.lhw.gatewaybase.module;
 
 /**
  * @author ：linhw

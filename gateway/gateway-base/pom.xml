@@ -4,16 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.lhw</groupId>
-        <artifactId>springcloud</artifactId>
+        <artifactId>gateway</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
-    <artifactId>gateway</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>gateway-base</module>
-    </modules>
+    <artifactId>gateway-base</artifactId>
 
     <dependencies>
         <dependency>
@@ -28,6 +22,7 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
+        <!-- 以下两个依赖（nacos、loadbalancer）主要是用于适配路由中的uri通过lb去调用注册中心中的服务，如果使用url的方式，可以不用引入这两个依赖 -->
         <!-- Nacos 注册中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -38,12 +33,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
