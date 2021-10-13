@@ -22,6 +22,25 @@ springboot 2.4.5 + spring cloud 2020.0.3 + nacos 2021.1
 这个loadbalancer其实是Ribbon的一个替代品，因为在springcloud 2020.0.x版本中，直接将Netflix给砍掉了，与此同时提供了很多的替代品，如下图
 ![](https://note.youdao.com/yws/public/resource/5625e7f46bd2867ce16b1afc7e4d095a/xmlnote/06BBC5EBF7EB4CE0B710FBB57B9BBF8B/37594)
 
+5、网关和服务之间的关系
+    打个比方，在一个大房子中，假设房间就是一个个的服务【存在很多个房间】，那网关就是这个大房子的大门
+    我们想要进入某个房间的时候，就需要先进入大门并告诉大门我们想要去哪个房间，然后大门会把去那个房间的路线给到我们，我们再走过去。
+    
+   也可以理解成网关就是一个外围服务，而各个应用程序就是内层服务，他们之间维护的上下文是不同的，请求体和响应体都不是相同的。
+   
+6、断路器实现【待实现】
+    原先是Hystrix实现的，Hystrix是Netflix实现的断路器模式工具包，不过在springcloud 2020.0.x版本之后，推荐使用resilience4j去替代它了
+    需要额外引入依赖resilience4j
+    resilience4j的官方文档参考 [https://cloud.spring.io/spring-cloud-circuitbreaker/reference/html/spring-cloud-circuitbreaker.html]
+    
+7、速率限制过滤器实现【待实现】
+    通过redis基于令牌桶算法的方式实现
+    需要引入spring-boot-starter-data-redis-reactive依赖
+    
+8、gateway的配置可以做到代码零入侵
+    只需要引入依赖然后在配置文件中添加相应的配置即可
+    如果需要更加细致的定制化配置，可以自定义配置类，或者过滤器实现所有功能。
+
 ## nacos
 ### 项目架构
 springboot 2.4.5 + nacos 2021.1

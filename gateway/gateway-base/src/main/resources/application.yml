@@ -10,11 +10,17 @@ spring:
         server-addr: 127.0.0.1:8848
         namespace: cde61379-0d83-4064-8508-405b7eb0f04c
     gateway:
+#      httpclient:  # 设置全局的请求超时时间
+#        connect-timeout: 1000
+#        response-timeout: 5s
       routes:
         - id: host-route
           # 注意：这里的这个uri只能填写成ip:port的写法，或者直接写注册中心的服务地址【lb://service-provider 匹配后提供服务的路由地址，这里的service-provider是服务名，如果要用这种方式则需要引入loadbalancer依赖】
           # 当路由适配后，会将这个uri地址替换请求中的ip和端口，其他的请求地址不变（如http://localhost:8901/json/parse/array/v2），则自动转发到（http://localhost:30010/json/parse/array/v2）
-          uri: lb://nacos-gateway-demo-1 #lb://nacos-demo #http://localhost:30010
+          uri: lb://nacos-demo #lb://nacos-gateway-demo-1 #http://localhost:30010
+          metadata:  # 设置局部路由的元数据
+            response-timeout: 200  # 设置局部路由的响应超时时间
+            connect-timeout: 200  # 设置局部路由的连接超时时间
           predicates:
 #            - Path=/json/parse/array  # 匹配url路径
 #            - After=2017-01-20T17:42:47.789+08:00  # 时间点之后的所有请求
@@ -29,7 +35,7 @@ spring:
 #            - Weight=group1, 8  # 权重，表示在group1这个组中，此路由占用的权重为百分之八十，也就是说百分之八十的请求会匹配到此路由【同组多个路由的情况下】
           filters:
 #            - AddRequestHeader=X-Request-lhw, helloWorld  # 将X-Request-lhw = helloWorld 这个键值对添加到下游请求头中【也就是转发过去后请求头会带上】
-#            - AddRequestParameter=name, lhw  # 转发请求时在请求体中加入此查询参数
+#            - AddRequestParameter=name, lhw  # 转发请求时在请求体中加入此查询参数，然后传给下游服务
 #            - AddResponseHeader=name, lhw  # 转发时设置将其添加到下游请求的响应头中，最终返回给客户端的响应头中会带上
 #            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin  # 当网关响应头中的CORS逻辑添加了这两项配置，且下游的响应头中也添加了这两项配置，那么这个filter将删除他们的重复值
 #            - MapRequestHeader=newKey, X-Request-Red  # 采用fromHeader和toHeader的方式来处理这两个参数，首先创建一个newKey的键，然后去网关的请求体中检索是否存在X-Request-Red这个键的配置，如果存在，那就把X-Request-Red的值提取出来赋值给newKey，反之则无影响【总的来说，就是往下游请求体中添加了一个newKey的配置】
@@ -40,3 +46,33 @@ spring:
 #            - RemoveResponseHeader=X-Response-Foo  # 将响应头中的指定key删掉
 #            - RemoveRequestParameter=name  # 删除请求参数
             - RewritePath=/path/?(?<segment>.*), /$\{segment}  # 路径重写，如/path/test，将会转发到/test，由于yaml的规范，需要把“$”替换成“$\”
+#            - RewriteLocationResponseHeader=AS_IN_REQUEST, Location, ,  # 重写响应头中 Location 的值，通常是为了摆脱后端特定的细节，使用 stripVersionMode, locationHeaderName, hostValue 和 protocolsRegex 参数来接收值。
+#            - RewriteResponseHeader=X-Response-Red, , password=[^&]+, password=***  # 重写响应头，比如一个头的值为 /42?user=ford&password=omg!what&flag=true，在发出下游请求后，将此头设置为 /42?user=ford&password=***&flag=true。注意使用 “$\” 代表 “$”
+#            - SaveSession  # 保存 Session，在向下游服务转发请求之前强制执行 WebSession::save操作，如果将 Spring Security 与 Spring Session 集成，并希望确保安全性详细信息已转发到远程进程，那么这一点至关重要。
+#            - SetPath=/{segment}  # 匹配并修改路径，eg：如果在上面的断言中设置Path=/foo/{segment}，则当一个请求http://localhost:8901/foo/test，进到网关后，匹配到了此路由，通过这个过滤器，会根据上面定义的uri转发请求，路径为/test，就相当于是把/foo/test路径改写为了/test
+#            - SetRequestHeader=X-Request-Foo, Bar  # 重置请求头的值，使用 name 和 value 参数接收值，和AddRequestHeader的区别就是，这个是修改，add是添加
+#            - SetResponseHeader=X-Response-Foo, Bar  # 重置响应头中的值，使用 name 和 value参数接收值，和AddResponseHeader的区别就是，这个是修改，add是添加
+#            - SetStatus=401  # 设置响应头的 HTTP 编码，使用单个参数 status 接收。值必须是一个有效的 HttpStatus
+#            - StripPrefix=2  # 截断指定数量的路径前缀，eg：如果请求的路径为/name/bar/foo，则路径会修改为/foo，即将路径的两个前缀去掉了。
+
+            # 重试请求【具体的可以看官方文旦】
+#            - name: Retry
+#                args:
+#                  retries: 3  # 重试次数
+#                  statuses: BAD_GATEWAY  # 什么状态下需要进行重试
+#                  methods: GET,POST  # 什么方式的请求会被重试
+#                  backoff:  # 为重试配置指数级的 backoff，重试时间间隔的计算公式为 firstBackoff * (factor ^ n)
+#                    firstBackoff: 10ms
+#                    maxBackoff: 50ms  # 如果设置了 maxBackoff，最大的 backoff 限制为 maxBackoff.
+#                    factor: 2
+#                    basedOnPreviousValue: false  # 如果 basedOnPreviousValue 设置为 true, backoff 计算公式为 prevBackoff * factor.
+
+            # 限制请求大小，当请求体大于限制大小时，则不允许访问下游服务
+#            - name: RequestSize
+#                args:
+#                  maxSize: 5000000
+
+            # 用指定的值替换现有的host header
+#            - name: SetRequestHost
+#                args:
+#                  host: hxmec.com
