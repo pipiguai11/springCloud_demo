@@ -14,7 +14,7 @@ import java.util.Map;
  * @modified By：
  */
 public abstract class AbstractRequestFactory {
-    private static final Logger logger= LoggerFactory.getLogger(AbstractRequestFactory.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractRequestFactory.class);
 
     /**
      * 构造请求实体
@@ -23,6 +23,7 @@ public abstract class AbstractRequestFactory {
      * @return {@link Request} 请求实体
      */
     public abstract Request createRequest(Object httpRequest);
+
     /**
      * 构造封装请求实体
      *
@@ -45,7 +46,7 @@ public abstract class AbstractRequestFactory {
         if (StringUtils.isNotEmpty(token)) {
             // TODO 解析令牌
             //final OAuthAuthentication authentication = resourceServerTokenServices.loadAuthentication(token);
-            if (StringUtils.isNotEmpty(clientToken)){
+            if (StringUtils.isNotEmpty(clientToken)) {
                 // TODO 解析请求Client令牌
             }
             return new Request(parameters, headers, method, requestURL, requestURI, queryString, remoteHost);

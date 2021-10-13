@@ -32,8 +32,8 @@ public class WebFluxRequestFactory extends AbstractRequestFactory {
     public Request createRequest(Object httpRequest) {
         ServerHttpRequest request = (ServerHttpRequest) httpRequest;
         final String sourceIp = analysisSourceIp(request);
-        final URI uri=request.getURI();
-        final String url=uri.getHost()+":"+uri.getPort()+uri.getPath()+"?"+uri.getQuery();
+        final URI uri = request.getURI();
+        final String url = uri.getHost() + ":" + uri.getPort() + uri.getPath() + "?" + uri.getQuery();
         final Map<String, String> headersMap = getHeadersMap(request);
         return this.buildRequest(null, headersMap, request.getMethodValue().toUpperCase(), url, uri.getPath(), uri.getQuery(), sourceIp);
     }

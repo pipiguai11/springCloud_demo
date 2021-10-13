@@ -18,13 +18,13 @@ public class TestController {
 
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
-    @RequestMapping(value = "/get" , method = RequestMethod.GET)
-    public String get(){
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    public String get() {
         return "success";
     }
 
-    @RequestMapping(value = "/filter" , method = RequestMethod.GET)
-    public String filter(){
+    @RequestMapping(value = "/filter", method = RequestMethod.GET)
+    public String filter() {
         return "filter";
     }
 

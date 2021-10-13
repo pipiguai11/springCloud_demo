@@ -12,7 +12,7 @@ import org.springframework.web.server.ServerWebExchange;
  */
 public class CustomCachedBodyOutputMessage extends CachedBodyOutputMessage {
 
-    public boolean isCached(){
+    public boolean isCached() {
         return true;
     }
 

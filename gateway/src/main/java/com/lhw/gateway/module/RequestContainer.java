@@ -24,15 +24,16 @@ public class RequestContainer {
     public static void remove() {
         local.remove();
     }
-    public static void rewriteOAuthRequestContainer(ThreadLocal<Request> request){
-        local=request;
+
+    public static void rewriteOAuthRequestContainer(ThreadLocal<Request> request) {
+        local = request;
     }
 
-    public static Request getTemp(){
+    public static Request getTemp() {
         return temp;
     }
 
-    public static void setTemp(Request request){
+    public static void setTemp(Request request) {
         temp = request;
     }
 }
