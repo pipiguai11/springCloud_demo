@@ -10,17 +10,29 @@ spring:
         server-addr: 127.0.0.1:8848
         namespace: cde61379-0d83-4064-8508-405b7eb0f04c
     gateway:
+      # 屏蔽网关功能
+#      enabled: false
+
+#      globalcors: # 配置全局的CORS
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins: "https://docs.spring.io"
+#            allowedMethods:
+#              - GET
+
+
 #      httpclient:  # 设置全局的请求超时时间
 #        connect-timeout: 1000
 #        response-timeout: 5s
+
       routes:
         - id: host-route
           # 注意：这里的这个uri只能填写成ip:port的写法，或者直接写注册中心的服务地址【lb://service-provider 匹配后提供服务的路由地址，这里的service-provider是服务名，如果要用这种方式则需要引入loadbalancer依赖】
           # 当路由适配后，会将这个uri地址替换请求中的ip和端口，其他的请求地址不变（如http://localhost:8901/json/parse/array/v2），则自动转发到（http://localhost:30010/json/parse/array/v2）
           uri: lb://nacos-demo #lb://nacos-gateway-demo-1 #http://localhost:30010
           metadata:  # 设置局部路由的元数据
-            response-timeout: 200  # 设置局部路由的响应超时时间
-            connect-timeout: 200  # 设置局部路由的连接超时时间
+            response-timeout: 2000  # 设置局部路由的响应超时时间
+            connect-timeout: 2000  # 设置局部路由的连接超时时间
           predicates:
 #            - Path=/json/parse/array  # 匹配url路径
 #            - After=2017-01-20T17:42:47.789+08:00  # 时间点之后的所有请求

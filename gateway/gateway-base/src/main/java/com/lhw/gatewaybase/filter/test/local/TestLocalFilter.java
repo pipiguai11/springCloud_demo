@@ -1,5 +1,6 @@
 package com.lhw.gatewaybase.filter.test.local;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
 public class TestLocalFilter {
 
     @Bean
+    @ConditionalOnBean(RouteLocatorBuilder.class)
     public RouteLocator myRoute(RouteLocatorBuilder builder){
         return builder.routes().route("testLocalFilter_1", p -> p
                         .path("/testLocalFilter/get/myname")
