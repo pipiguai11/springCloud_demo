@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 public class TestLocalFilter {
 
     @Bean
-    @ConditionalOnBean(RouteLocatorBuilder.class)
+//    @ConditionalOnBean(RouteLocatorBuilder.class)
     public RouteLocator myRoute(RouteLocatorBuilder builder){
         return builder.routes().route("testLocalFilter_1", p -> p
                         .path("/testLocalFilter/get/myname")
