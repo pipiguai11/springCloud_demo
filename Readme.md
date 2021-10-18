@@ -28,14 +28,18 @@ springboot 2.4.5 + spring cloud 2020.0.3 + nacos 2021.1
     
    也可以理解成网关就是一个外围服务，而各个应用程序就是内层服务，他们之间维护的上下文是不同的，请求体和响应体都不是相同的。
    
-6、断路器实现【待实现】
+6、断路器实现
     原先是Hystrix实现的，Hystrix是Netflix实现的断路器模式工具包，不过在springcloud 2020.0.x版本之后，推荐使用resilience4j去替代它了
     需要额外引入依赖resilience4j
     resilience4j的官方文档参考 [https://cloud.spring.io/spring-cloud-circuitbreaker/reference/html/spring-cloud-circuitbreaker.html]
     
-7、速率限制过滤器实现【待实现】
+   具体实现看gateway-breaker模块
+    
+7、速率限制过滤器实现
     通过redis基于令牌桶算法的方式实现
     需要引入spring-boot-starter-data-redis-reactive依赖
+    
+   具体实现看gateway-rate-limit模块
     
 8、gateway的配置可以做到代码零入侵
     只需要引入依赖然后在配置文件中添加相应的配置即可

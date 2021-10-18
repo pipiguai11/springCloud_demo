@@ -31,6 +31,7 @@
         <spring.cloud.loadbalancer>3.0.3</spring.cloud.loadbalancer>
         <spring.cloud.resilience4j>2.0.2</spring.cloud.resilience4j>
         <fastjson.version>1.2.68</fastjson.version>
+        <spring.boot.data.redis.reactive>2.4.5</spring.boot.data.redis.reactive>
     </properties>
 
 
@@ -104,6 +105,13 @@
                 <version>${spring.cloud.resilience4j}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis-reactive -->
+            <!-- SpringCloud gateway中通过redis实现速率限制，采用的是令牌桶的方式实现的 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+                <version>${spring.boot.data.redis.reactive}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.alibaba</groupId>

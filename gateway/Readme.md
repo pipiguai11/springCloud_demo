@@ -30,3 +30,12 @@
 ### 测试断路器
 首先启动gateway-base提供基础服务
 然后启动gateway-breaker的测试类CircuitbreakerTest
+
+
+### 测试速率限制rate-limit
+首先启动gateway-base提供基础服务
+
+然后启动gateway-rate-limit模块
+
+最后通过性能测试工具（我用的是jmeter）进行测试
+![http://localhost:8922/limit/account/1]

@@ -1,0 +1,25 @@
+server:
+  port: 8922
+
+spring:
+  application:
+    name: gateway-rate-limit
+  redis:
+    host: 127.0.0.1
+    port: 30101 #6379
+    database: 6
+  cloud:
+    gateway:
+      routes:
+        - id: rate-limit
+          uri: http://localhost:8902
+          predicates:
+            - Method=GET,POST,DELETE  # 根据请求类型匹配，想要接收什么类型的请求，就直接在这里配置即可
+          filters:
+            - RewritePath=/limit/(?<path>.*), /$\{path} # 重写路径
+            - name: RequestRateLimiter  # 配置请求速率限制，通过redis采用令牌桶的方式
+              args:
+                key-resolver: "#{@userKeyResolver}"  # 通过SPEL表达式配置KeyResolver，这个“userKeyResolver”是spring容器中的Bean对象名，其实这里配不配我感觉没什么影响，但是这个Bean一定要注入spring容器，否则无法正常限制，具体的看到KeyResolverConfig配置类
+                redis-rate-limiter.replenishRate: 1  # 允许用户每秒可执行多少个请求，相当于是令牌桶的填充速度
+                redis-rate-limiter.burstCapacity: 3  # 允许用户在一秒内可执行多少个请求，相当于是令牌桶的容量，当这个值为0时，会阻止所有的请求
+                redis-rate-limiter.requestedTokens: 1  # 一个请求花费多少个令牌，即每个请求会从令牌桶中取的令牌数量，默认为1
