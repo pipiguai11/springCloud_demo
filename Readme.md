@@ -33,11 +33,30 @@ springboot 2.4.5 + spring cloud 2020.0.3 + nacos 2021.1
     需要额外引入依赖resilience4j
     resilience4j的官方文档参考 [https://cloud.spring.io/spring-cloud-circuitbreaker/reference/html/spring-cloud-circuitbreaker.html]
     
+ 
+   在使用过程中，必须配置断路器，其中包括滑动窗口的类型（如时间窗口）、窗口的大小、触发断路的条件等等配置。
+   断路器的filters名字是固定的，就叫CircuitBreaker，这个不能随便改。
+   如果我们在测试过程中发现，触发断路或者引发异常后，响应回来的结果不太好看，不太美观，我们可以自定义Fallback去修改它触发异常后的转发地址（先定义一个myFallback接口，然后在配置中添加fallbackUri:forward:/myFallback 即可）
+   
    具体实现看gateway-breaker模块
     
 7、速率限制过滤器实现
     通过redis基于令牌桶算法的方式实现
     需要引入spring-boot-starter-data-redis-reactive依赖
+    
+   key-resolver: "#{@userKeyResolver}"  # 通过SPEL表达式配置KeyResolver，这个“userKeyResolver”是spring容器中的Bean对象名，其实这里配不配我感觉没什么影响，但是这个Bean一定要注入spring容器，否则无法正常限制，具体的看到KeyResolverConfig配置类。
+   redis-rate-limiter.replenishRate: 1  # 令牌桶的填充速度，这里是每秒填充1个令牌。
+   redis-rate-limiter.burstCapacity: 3  # 令牌桶的容量，这里是指令牌桶容量为3。
+   redis-rate-limiter.requestedTokens: 1 # 这里配不配都一样的，默认都是1，特殊情况可以修改，用于指定每个请求消费多少个令牌。
+   
+   KeyResolver，密钥策略，我们可以修改这个内容实现我们希望的限流条件，比如用户限流、ip限流、接口地址限流等等
+   以上提到的限流条件，其中的内容我们都可以从ServerWebExchange对象中获取到，如下
+   
+        用户限流（前提是请求头中存在userId）：return exchange -> Mono.just(exchange.getRequest().getQueryParams().getFirst("userId"))
+        
+        ip限流：return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostString())
+        
+        接口限流（也就是uri限流）：return exchange -> Mono.just(exchange.getRequest().getPath().value());}
     
    具体实现看gateway-rate-limit模块
     
