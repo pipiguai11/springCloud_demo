@@ -17,7 +17,7 @@ spring:
             - Method=GET,POST,DELETE  # 根据请求类型匹配，想要接收什么类型的请求，就直接在这里配置即可
           filters:
 #            - CircuitBreaker=myCircuitBreaker
-            - name: CircuitBreaker
+            - name: CircuitBreaker  # 添加断路器配置
               args:
-                name: myCircuitBreaker
-                fallbackUri: forward:/myFallback
+                name: myCircuitBreaker  # 默认就是写这个
+                fallbackUri: forward:/myFallback  # 当下游服务发生异常之后，将请求转发到这个路径下
