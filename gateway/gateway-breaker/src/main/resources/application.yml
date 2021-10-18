@@ -16,8 +16,8 @@ spring:
           predicates:
             - Method=GET,POST,DELETE  # 根据请求类型匹配，想要接收什么类型的请求，就直接在这里配置即可
           filters:
-            - CircuitBreaker=myCircuitBreaker
-#            - name: CircuitBreaker
-#              args:
-#                name: myCircuitBreaker
-#                fallbackUri: forward:/myFallback
+#            - CircuitBreaker=myCircuitBreaker
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/myFallback
