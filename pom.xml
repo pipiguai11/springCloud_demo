@@ -29,6 +29,7 @@
         <spring.cloud.gateway>3.0.4</spring.cloud.gateway>
         <spring.cloud.bootstrap>3.0.3</spring.cloud.bootstrap>
         <spring.cloud.loadbalancer>3.0.3</spring.cloud.loadbalancer>
+        <spring.cloud.resilience4j>2.0.2</spring.cloud.resilience4j>
         <fastjson.version>1.2.68</fastjson.version>
     </properties>
 
@@ -94,6 +95,15 @@
                 <artifactId>spring-cloud-starter-loadbalancer</artifactId>
                 <version>${spring.cloud.loadbalancer}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-circuitbreaker-reactor-resilience4j -->
+            <!-- springCloud 2020.0.x版本后gateway实现断路器的一种推荐替代方式 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+                <version>${spring.cloud.resilience4j}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.alibaba</groupId>

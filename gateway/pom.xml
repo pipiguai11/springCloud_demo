@@ -13,6 +13,7 @@
 
     <modules>
         <module>gateway-base</module>
+        <module>gateway-breaker</module>
     </modules>
 
     <dependencies>
@@ -28,6 +29,7 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
+        <!-- 以下两个依赖（nacos、loadbalancer）主要是用于适配路由中的uri通过lb去调用注册中心中的服务，如果使用url的方式，可以不用引入这两个依赖 -->
         <!-- Nacos 注册中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

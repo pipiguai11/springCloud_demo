@@ -1,0 +1,23 @@
+server:
+  port: 8912
+
+spring:
+  application:
+    name: nacos-gateway-breaker
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: cde61379-0d83-4064-8508-405b7eb0f04c
+    gateway:
+      routes:
+        - id: circuitbreaker_route
+          uri: http://localhost:8902 #lb://nacos-demo
+          predicates:
+            - Method=GET,POST,DELETE  # 根据请求类型匹配，想要接收什么类型的请求，就直接在这里配置即可
+          filters:
+            - CircuitBreaker=myCircuitBreaker
+#            - name: CircuitBreaker
+#              args:
+#                name: myCircuitBreaker
+#                fallbackUri: forward:/myFallback

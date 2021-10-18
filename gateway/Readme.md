@@ -24,3 +24,9 @@
 
 
 子项目：gateway-base中，主要是测试gateway的配置用法，它的常用配置以及一些特殊配置
+
+
+
+### 测试断路器
+首先启动gateway-base提供基础服务
+然后启动gateway-breaker的测试类CircuitbreakerTest

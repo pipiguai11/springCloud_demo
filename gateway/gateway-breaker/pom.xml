@@ -7,7 +7,16 @@
         <artifactId>gateway</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>gateway-base</artifactId>
+
+    <artifactId>gateway-breaker</artifactId>
+
+    <dependencies>
+        <!-- 要想实现gateway断路器，需要引入此依赖，原先的断路器用的是Hystrix，springCloud 2020.0.x版本后推荐使用这个 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
