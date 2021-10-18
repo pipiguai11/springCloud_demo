@@ -56,7 +56,7 @@ public class TestController {
      */
     @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
     public String account(@PathVariable("id") int id) throws InterruptedException {
-        System.out.println("id：【" + id + "】");
+        System.out.println(Thread.currentThread().getName() + "---- id：【" + id + "】");
         if(1==id) {
             Thread.sleep(500);
         }
