@@ -16,6 +16,8 @@ spring:
           predicates:
             - Method=GET,POST,DELETE  # 根据请求类型匹配，想要接收什么类型的请求，就直接在这里配置即可
           filters:
+#            - request-rate-limiter:  # 注意：如果没有在项目上指定密钥（也就是没有配置KeyResolver），那网关将会拒绝所有的请求，此时如果想让网关正常限流工作，则需要添加此配置允许网关缺少密钥，否则就必须配置keyResolver
+#                deny-empty-key: false
             - RewritePath=/limit/(?<path>.*), /$\{path} # 重写路径
             - name: RequestRateLimiter  # 配置请求速率限制，通过redis采用令牌桶的方式
               args:
