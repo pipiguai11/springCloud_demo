@@ -8,4 +8,6 @@ public interface InfoService {
 
     public List<User> getUserInfo();
 
+    public void checkAddr();
+
 }

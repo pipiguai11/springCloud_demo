@@ -3,11 +3,13 @@ package com.lhw.provider.service;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.lhw.dubbo_api.model.User;
 import com.lhw.dubbo_api.service.UserService;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Component("userServiceImpl")
 public class UserServiceImpl implements UserService {
 
     public UserServiceImpl() {

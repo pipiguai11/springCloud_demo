@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+               http://dubbo.apache.org/schema/dubbo
+               http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+     点对点直连，不通过注册中心
+         在开发及测试环境下，经常需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，点对点直连方式，
+         将以服务接口为单位，忽略注册中心的提供者列表，A 接口配置点对点，不影响 B 接口从注册中心获取列表。
+
+     -->
+
+    <!-- 应用信息配置，对应ApplicationConfig；主要配置的是应用的信息，包括提供者和消费者 -->
+    <dubbo:application name="consumer"/>
+
+    <!-- 注册中心配置-->
+<!--    <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false"/>-->
+
+    <!-- 可以不配置注册中心，直接连接到提供者，只要知道提供者所在的服务器，以及暴露出来的端口号即可 -->
+    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" url="dubbo://localhost:30880"/>
+    <dubbo:reference interface="com.lhw.dubbo_api.service.AddrService" id="addrService" url="dubbo://localhost:30880" timeout="5000"/>
+
+</beans>

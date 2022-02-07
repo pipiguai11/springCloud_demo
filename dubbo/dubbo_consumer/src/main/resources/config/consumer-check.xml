@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+               http://dubbo.apache.org/schema/dubbo
+               http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+     启动时检查（一般就是配置在消费者端的），默认为true，启动时检查服务是否可用，如果不可用则报错，程序无法正常启动
+     可以在三个地方配置
+        <dubbo:reference check="false">
+        <dubbo:consumer check="false">
+        <dubbo:registry check="false">
+     优先级从上到下逐渐增强
+     -->
+
+    <!-- 应用信息配置，对应ApplicationConfig；主要配置的是应用的信息，包括提供者和消费者 -->
+    <dubbo:application name="consumer"/>
+
+    <!-- 注册中心配置-->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false"/>
+
+    <!-- 服务消费者引用服务配置，指定引用的接口，以及这个Bean的ID（这个id就是注入的BeanName，如果在消费者中需要手动注入，可以直接使用这个名字，不过一般都是通过@Reference注解注入，它会通过接口类型去判断并注入），还可以定义使用的注册中心或者协议等等，具体的看到官方文档 -->
+    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" check="true"/>
+    <dubbo:reference interface="com.lhw.dubbo_api.service.AddrService" id="addrService" check="false"/>
+
+</beans>

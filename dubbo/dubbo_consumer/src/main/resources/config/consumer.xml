@@ -7,10 +7,17 @@
                http://dubbo.apache.org/schema/dubbo
                http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
+    <!--
+     自动扫描@Reference注解并注入
+     -->
+
+    <!-- 应用信息配置，对应ApplicationConfig；主要配置的是应用的信息，包括提供者和消费者 -->
     <dubbo:application name="consumer"/>
 
+    <!-- 注册中心配置-->
     <dubbo:registry address="zookeeper://127.0.0.1:2181" />
 
-    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService"/>
+    <!-- 扫描包路径下的所有类，自动注入带有@Reference注解的对象 -->
+    <dubbo:annotation package="com.lhw.consumer"/>
 
 </beans>

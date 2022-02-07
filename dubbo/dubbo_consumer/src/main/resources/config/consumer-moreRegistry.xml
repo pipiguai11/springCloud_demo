@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+               http://dubbo.apache.org/schema/dubbo
+               http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+    Dubbo 支持同一服务向多注册中心同时注册，或者不同服务分别注册到不同的注册中心上去，
+    甚至可以同时引用注册在不同注册中心上的同名服务。另外，注册中心是支持自定义扩展的
+     -->
+
+
+    <!-- 应用信息配置，对应ApplicationConfig；主要配置的是应用的信息，包括提供者和消费者 -->
+    <dubbo:application name="consumer"/>
+
+    <!-- 注册中心配置-->
+    <dubbo:registry id="local" address="zookeeper://127.0.0.1:2181|zookeeper://192.168.0.126:2181" check="false"/>
+    <dubbo:registry id="test" address="zookeeper://localhost:2181" check="false"/>
+
+    <!-- 服务消费者引用服务配置，指定引用的接口，以及这个Bean的ID（这个id就是注入的BeanName，如果在消费者中需要手动注入，可以直接使用这个名字，不过一般都是通过@Reference注解注入，它会通过接口类型去判断并注入），还可以定义使用的注册中心或者协议等等，具体的看到官方文档 -->
+    <!-- 服务级别 -->
+    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" registry="test"/>
+    <dubbo:reference interface="com.lhw.dubbo_api.service.AddrService" id="addrService" registry="local" timeout="5000"/>
+
+
+</beans>
