@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+           http://dubbo.apache.org/schema/dubbo
+           http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+    分组
+        分组主要是用在同一个接口存在多种实现的情况
+        如下，UserService接口存在两个实现类，想要把他们同时注册上去，那就需要使用分组（group）进行区分
+     -->
+
+    <dubbo:application name="dubbo-provider"/>
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false"/>
+
+    <!-- 注册同一个接口（UserService）的两个不同的服务（UserServiceImpl和UserServiceImpl2） -->
+    <!-- 使用group属性标识服务所属的组 -->
+    <dubbo:service interface="com.lhw.dubbo_api.service.UserService" ref="userServiceImpl" group="impl1"/>
+    <bean id="userServiceImpl2" class="com.lhw.provider.service.UserServiceImpl2"/>
+    <dubbo:service interface="com.lhw.dubbo_api.service.UserService" ref="userServiceImpl2" group="impl2"/>
+
+    <bean id="addrServiceImpl" class="com.lhw.provider.service.AddrServiceImpl"/>
+    <dubbo:service interface="com.lhw.dubbo_api.service.AddrService" ref="addrServiceImpl"/>
+
+</beans>

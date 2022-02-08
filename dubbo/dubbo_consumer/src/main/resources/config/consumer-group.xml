@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+               http://dubbo.apache.org/schema/dubbo
+               http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+    分组
+        分组主要是用在同一个接口存在多种实现的情况
+        如下，UserService接口存在两个实现类，想要把他们同时注册上去，那就需要使用分组（group）进行区分
+     -->
+
+
+    <!-- 应用信息配置，对应ApplicationConfig；主要配置的是应用的信息，包括提供者和消费者 -->
+    <dubbo:application name="consumer"/>
+
+    <!-- 注册中心配置-->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false"/>
+
+    <!-- 从注册中心中找到对应的组的服务，并将其注入到消费者的spring容器中。 -->
+    <!-- 注意：这里的组一定要和提供者中的组对应，否则无法正常找到对应的服务 -->
+<!--    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" group="impl1"/>-->
+<!--    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" group="impl2"/>-->
+    <!-- 也可以使用“*”，表示任意组 -->
+    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" group="*"/>
+
+    <dubbo:reference interface="com.lhw.dubbo_api.service.AddrService" id="addrService"/>
+
+
+</beans>
