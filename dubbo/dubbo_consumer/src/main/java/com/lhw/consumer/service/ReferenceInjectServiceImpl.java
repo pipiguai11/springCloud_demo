@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author ：linhw
  * @date ：22.2.7 15:41
- * @description：手动注入的方式，对应consumer2.xml配置文件
+ * @description：通过@Resource方式注入（也就是先将该服务从注册中心发现，然后注入到消费者端的spring容器中，最后再通过@Resource注解注入），对应consumer2.xml配置文件
  *      通过<dubbo:reference/>的方式手动注入容器，在注入时需要注意的是，属性名必须和配置文件中的id名对应
  * @modified By：
  */
