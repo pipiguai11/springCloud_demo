@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+               http://dubbo.apache.org/schema/dubbo
+               http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+    分组聚合
+        通过分组对结果进行聚合并返回聚合后的结果，比如菜单服务，用group区分同一接口的多种实现，
+        现在消费方需从每种group中调用一次并返回结果，对结果进行合并之后返回，这样就可以实现聚合菜单项。
+     -->
+
+
+    <!-- 应用信息配置，对应ApplicationConfig；主要配置的是应用的信息，包括提供者和消费者 -->
+    <dubbo:application name="consumer"/>
+
+    <!-- 注册中心配置-->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false"/>
+
+    <!-- 当执行调用时，会分别调用这两个服务提供者的服务，然后对结果进行聚合返回 -->
+    <!-- 注意：这里的组一定要和提供者中的组对应，否则无法正常找到对应的服务 -->
+    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" group="impl1,impl2" merger="true"/>
+    <!-- 也可以使用“*”，表示所有分组 -->
+<!--    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" group="*" merger="true"/>-->
+
+    <dubbo:reference interface="com.lhw.dubbo_api.service.AddrService" id="addrService"/>
+
+
+</beans>
