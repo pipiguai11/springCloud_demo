@@ -21,7 +21,7 @@
     <dubbo:protocol name="dubbo" port="30880"/>
 
     <!--定义注解扫描指定路径下的所有bean，当作服务，除此之外，还可以用<dubbo:service>一个一个的配置服务（前提是要配置好对应的实现类，可以直接通过注解将对应实现类注入容器，或者在这个xml配置类中通过<bean>去配置，最后都是需要通过beanID去指定引用的）-->
-    <dubbo:annotation package="com.lhw.provider.service"/>
+    <dubbo:annotation package="com.lhw.xmlregistry.service"/>
 
     <!-- 服务提供者缺省配置，可以指定超时时间、自定义异常处理过滤器等等，具体的看到官方文档 -->
     <dubbo:provider filter="dubboExceptionFilter,-exception" timeout="50000"/>
