@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+           http://dubbo.apache.org/schema/dubbo
+           http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+    Dubbo 支持同一服务向多注册中心同时注册，或者不同服务分别注册到不同的注册中心上去，
+    甚至可以同时引用注册在不同注册中心上的同名服务。另外，注册中心是支持自定义扩展的
+     -->
+
+    <dubbo:application name="dubbo-provider"/>
+
+    <dubbo:registry id="local" address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:registry id="remote" address="zookeeper://192.168.0.126:2181"/>
+    <dubbo:registry id="test" address="zookeeper://localhost:2181"/>
+
+    <!-- 同一个服务同时向不同的注册中心注册服务 -->
+    <dubbo:service interface="com.lhw.dubbo_api.service.UserService" ref="userServiceImpl" registry="local,remote"/>
+
+    <!-- 不同的服务往不同的注册中心注册服务 -->
+    <bean id="addrServiceImpl" class="com.lhw.xmlregistry.service.AddrServiceImpl"/>
+    <dubbo:service interface="com.lhw.dubbo_api.service.AddrService" ref="addrServiceImpl" registry="test"/>
+
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+               http://dubbo.apache.org/schema/dubbo
+               http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+     单个服务注册，可以针对每个服务进行单独配置
+     -->
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="provider"/>
+
+    <!-- 使用multicast广播注册中心暴露服务地址 -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <!-- 前面是定义提供者信息的内容，后面开始配置服务 -->
+
+    <!-- 声明需要暴露的服务接口，这里直接引用spring容器中的Bean（userServiceImpl），前提是它事先被初始化了（这里是通过@Component注解注入了），直接ref它的BeanName即可 -->
+    <dubbo:service interface="com.lhw.dubbo_api.service.UserService" ref="userServiceImpl"/>
+
+    <!-- 如果在启动时，没有事先将其注入到容器中，启动会报错，这时可以在配置文件中配置，先通过<bean>标签配置一个bean，指向该实现类，然后<dubbo:service>的ref再引用到bean的id即可 -->
+    <bean id="addrServiceImpl" class="com.lhw.xmlregistry.service.AddrServiceImpl"/>
+    <dubbo:service interface="com.lhw.dubbo_api.service.AddrService" ref="addrServiceImpl"/>
+
+</beans>

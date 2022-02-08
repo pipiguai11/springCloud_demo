@@ -4,23 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.lhw</groupId>
-        <artifactId>dubbo</artifactId>
+        <artifactId>dubbo_provider</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>dubbo_provider</artifactId>
 
-    <modules>
-        <module>dubbo_provider_xmlregistry</module>
-        <module>dubbo_provider_apiregistry</module>
-    </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.lhw</groupId>
-            <artifactId>dubbo_api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <artifactId>dubbo_provider_apiregistry</artifactId>
 
     <build>
         <plugins>
