@@ -4,23 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.lhw</groupId>
-        <artifactId>dubbo</artifactId>
+        <artifactId>dubbo_consumer</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>dubbo_consumer</artifactId>
-
-    <modules>
-        <module>dubbo_consumer_apiinvoke</module>
-        <module>dubbo_consumer_xmlinvoke</module>
-    </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.lhw</groupId>
-            <artifactId>dubbo_api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <artifactId>dubbo_consumer_apiinvoke</artifactId>
 
     <build>
         <plugins>
