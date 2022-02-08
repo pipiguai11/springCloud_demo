@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+           http://dubbo.apache.org/schema/dubbo
+           http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+    版本
+        当一个接口实现，出现不兼容升级时，可以用版本号过渡，版本号不同的服务相互间不引用。
+
+        可以按照以下的步骤进行版本迁移：
+
+            1、在低压力时间段，先升级一半提供者为新版本
+            2、再将所有消费者升级为新版本
+            3、然后将剩下的一半提供者升级为新版本
+     -->
+
+    <dubbo:application name="dubbo-provider"/>
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false"/>
+
+    <!-- 注册同一个接口（UserService）的两个不同的服务（UserServiceImpl和UserServiceImpl2） -->
+    <!-- 使用group属性标识服务所属的组 -->
+    <dubbo:service interface="com.lhw.dubbo_api.service.UserService" ref="userServiceImpl" version="1.0.0"/>
+    <bean id="userServiceImpl2" class="com.lhw.provider.service.UserServiceImpl2"/>
+    <dubbo:service interface="com.lhw.dubbo_api.service.UserService" ref="userServiceImpl2" version="2.0.0"/>
+
+    <bean id="addrServiceImpl" class="com.lhw.provider.service.AddrServiceImpl"/>
+    <dubbo:service interface="com.lhw.dubbo_api.service.AddrService" ref="addrServiceImpl" version="1.0.0"/>
+
+</beans>

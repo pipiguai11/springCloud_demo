@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+               http://dubbo.apache.org/schema/dubbo
+               http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--
+    版本（它的作用其实和group很像，都是用来区分服务的）
+        当一个接口实现，出现不兼容升级时，可以用版本号过渡，版本号不同的服务相互间不引用。
+
+        可以按照以下的步骤进行版本迁移：
+
+            1、在低压力时间段，先升级一半提供者为新版本
+            2、再将所有消费者升级为新版本
+            3、然后将剩下的一半提供者升级为新版本
+     -->
+
+
+    <!-- 应用信息配置，对应ApplicationConfig；主要配置的是应用的信息，包括提供者和消费者 -->
+    <dubbo:application name="consumer"/>
+
+    <!-- 注册中心配置-->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" check="false"/>
+
+    <!-- 从注册中心中找到对应版本的服务，并将其注入到消费者的spring容器中。 -->
+    <!-- 注意：这里的版本一定要和提供者中的版本对应，否则无法正常找到对应的服务 -->
+<!--    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" version="1.0.0"/>-->
+    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" version="2.0.0"/>
+    <!-- 也可以使用“*”，表示任意版本 -->
+<!--    <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" version="*"/>-->
+
+    <dubbo:reference interface="com.lhw.dubbo_api.service.AddrService" id="addrService" version="1.0.0"/>
+
+
+</beans>
