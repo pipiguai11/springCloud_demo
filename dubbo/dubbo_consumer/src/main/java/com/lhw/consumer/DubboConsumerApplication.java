@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource({"classpath:config/consumer-groupByResult.xml"})
+//@ImportResource({"classpath:config/consumer2.xml"})
 public class DubboConsumerApplication {
 
     public static void main(String[] args) {
