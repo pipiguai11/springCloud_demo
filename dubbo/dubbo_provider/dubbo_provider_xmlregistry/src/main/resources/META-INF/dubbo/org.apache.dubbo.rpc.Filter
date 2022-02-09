@@ -1,0 +1,1 @@
+dubboExceptionFilter=com.lhw.xmlregistry.filter.DubboExceptionFilter2

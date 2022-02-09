@@ -18,7 +18,7 @@
 
     <!-- 注册中心配置，如果同时有多个不同的注册中心，可以声明多个registry标签，并在<dubbo:service>(提供者方)或者<dubbo:reference>(消费者方)中使用registry属性指定，如下 -->
     <dubbo:registry id="local" address="zookeeper://127.0.0.1:2181" />
-    <dubbo:registry id="remote" address="zookeeper://192.168.0.126:2181" />
+    <dubbo:registry id="remote" address="zookeeper://localhost:2181" />
 
     <!-- 服务消费者引用服务配置，指定引用的接口，以及这个Bean的ID（这个id就是注入的BeanName，如果在消费者中需要手动注入，可以直接使用这个名字），还可以定义使用的注册中心或者协议等等，具体的看到官方文档 -->
     <dubbo:reference interface="com.lhw.dubbo_api.service.UserService" id="consumrService" registry="local"/>
