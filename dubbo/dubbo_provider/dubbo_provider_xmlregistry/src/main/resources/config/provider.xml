@@ -11,8 +11,8 @@
     通过包扫描服务的方式注册（最方便的方式，但是没有单个服务注册那么灵活）
      -->
 
-    <!--定义当前提供方的应用信息，用于计算依赖关系-->
-    <dubbo:application name="dubbo-provider"/>
+    <!--定义当前提供方的应用信息，用于计算依赖关系，register-mode设置注册应用级服务还是接口级服务，all表示两种同时注册，还有另外两个参数（interface、instance）-->
+    <dubbo:application name="dubbo-provider" register-mode="all"/>
 
     <!--注册中心暴露的服务地址（如果是用zookeeper的话就写以下这个，如果是其他的注册中心，去官网看吧）-->
     <dubbo:registry address="zookeeper://127.0.0.1:2181"/>

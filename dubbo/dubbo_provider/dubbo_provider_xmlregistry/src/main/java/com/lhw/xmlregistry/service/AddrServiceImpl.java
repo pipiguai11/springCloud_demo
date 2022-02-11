@@ -1,7 +1,11 @@
 package com.lhw.xmlregistry.service;
 
-import com.alibaba.dubbo.config.annotation.Service;
+//import com.alibaba.dubbo.config.annotation.Service;
 import com.lhw.dubbo_api.service.AddrService;
+import org.apache.dubbo.config.annotation.DubboService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author ：linhw
@@ -9,7 +13,8 @@ import com.lhw.dubbo_api.service.AddrService;
  * @description：
  * @modified By：
  */
-@Service
+//@Service
+@DubboService
 public class AddrServiceImpl implements AddrService {
 
     public AddrServiceImpl(){
@@ -24,5 +29,15 @@ public class AddrServiceImpl implements AddrService {
 
         }
         System.out.println("调用了AddrServiceImpl类的check方法");
+    }
+
+    @Override
+    public String getPreviewFullUrl(String code, String fileName) {
+        return null;
+    }
+
+    @Override
+    public Map<String, List<Object>> countCatalogData(Integer size) {
+        return null;
     }
 }

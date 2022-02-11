@@ -1,10 +1,10 @@
 package com.lhw.xmlinvoke.service;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.lhw.dubbo_api.model.User;
 import com.lhw.dubbo_api.service.AddrService;
 import com.lhw.dubbo_api.service.InfoService;
 import com.lhw.dubbo_api.service.UserService;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +17,10 @@ import java.util.List;
 @Service("autoAnnotation")
 public class AutoAnnotationServiceImpl implements InfoService {
 
-    @Reference
+    @DubboReference
     UserService consumerService;
 
-    @Reference
+    @DubboReference
     AddrService addrService;
 
     @Override

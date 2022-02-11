@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource({"classpath:config/consumer2.xml"})
+@ImportResource({"classpath:config/consumer.xml"})
 public class DubboConsumerXmlinvokeApplication {
 
     public static void main(String[] args) {

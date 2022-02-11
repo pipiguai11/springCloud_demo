@@ -1,13 +1,15 @@
 package com.lhw.xmlregistry.service;
 
-import com.alibaba.dubbo.config.annotation.Service;
+//import com.alibaba.dubbo.config.annotation.Service;
 import com.lhw.dubbo_api.model.User;
 import com.lhw.dubbo_api.service.UserService;
+import org.apache.dubbo.config.annotation.DubboService;
 
 import java.util.LinkedList;
 import java.util.List;
 
-@Service
+//@Service
+@DubboService
 public class UserServiceImpl2 implements UserService {
     @Override
     public List<User> userInfo() {
