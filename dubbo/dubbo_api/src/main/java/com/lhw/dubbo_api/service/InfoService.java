@@ -10,4 +10,9 @@ public interface InfoService {
 
     public void checkAddr();
 
+    /**
+     * 回声测试，检测服务是否可用
+     */
+    void echoTest();
+
 }

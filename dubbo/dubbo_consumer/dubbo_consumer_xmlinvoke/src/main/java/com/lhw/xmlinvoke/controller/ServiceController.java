@@ -46,4 +46,15 @@ public class ServiceController {
         return "success";
     }
 
+    @RequestMapping("echo/test")
+    public String echoTest(){
+        System.out.println("autoAnnotation start");
+        autoAnnotation.echoTest();
+
+        System.out.println();
+        System.out.println("referenceInject start");
+        referenceInject.echoTest();
+        return "success";
+    }
+
 }

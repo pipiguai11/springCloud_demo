@@ -4,8 +4,11 @@ import com.lhw.dubbo_api.model.User;
 import com.lhw.dubbo_api.service.AddrService;
 import com.lhw.dubbo_api.service.InfoService;
 import com.lhw.dubbo_api.service.UserService;
+import com.lhw.dubbo_api.utils.EchoUtil;
+import org.apache.dubbo.rpc.service.EchoService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -17,13 +20,19 @@ import java.util.List;
  * @modified By：
  */
 @Service("referenceInject")
-public class ReferenceInjectServiceImpl implements InfoService {
+public class ReferenceInjectServiceImpl extends AbstractServiceImpl implements InfoService {
 
     @Resource
     UserService consumerService;
 
     @Resource
     AddrService addrService;
+
+    @PostConstruct
+    public void initService(){
+        registryService(consumerService);
+        registryService(addrService);
+    }
 
     @Override
     public List<User> getUserInfo() {
@@ -34,4 +43,5 @@ public class ReferenceInjectServiceImpl implements InfoService {
     public void checkAddr() {
         addrService.check();
     }
+
 }
