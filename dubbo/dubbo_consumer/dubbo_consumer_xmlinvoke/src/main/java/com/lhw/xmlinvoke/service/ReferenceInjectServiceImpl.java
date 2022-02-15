@@ -5,6 +5,8 @@ import com.lhw.dubbo_api.service.AddrService;
 import com.lhw.dubbo_api.service.InfoService;
 import com.lhw.dubbo_api.service.UserService;
 import com.lhw.dubbo_api.utils.EchoUtil;
+import com.lhw.dubbo_api.utils.RpcContextUtil;
+import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.service.EchoService;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,11 @@ public class ReferenceInjectServiceImpl extends AbstractServiceImpl implements I
     @Override
     public void checkAddr() {
         addrService.check();
+    }
+
+    @Override
+    public void showRpcContextMessage(){
+
     }
 
 }

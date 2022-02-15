@@ -4,7 +4,9 @@ import com.lhw.dubbo_api.model.User;
 import com.lhw.dubbo_api.service.AddrService;
 import com.lhw.dubbo_api.service.InfoService;
 import com.lhw.dubbo_api.service.UserService;
+import com.lhw.dubbo_api.utils.RpcContextUtil;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +21,7 @@ import java.util.List;
 @Service("autoAnnotation")
 public class AutoAnnotationServiceImpl extends AbstractServiceImpl implements InfoService {
 
-    @DubboReference
+    @DubboReference(timeout = 5000)
     UserService consumerService;
 
     @DubboReference
@@ -39,6 +41,19 @@ public class AutoAnnotationServiceImpl extends AbstractServiceImpl implements In
     @Override
     public void checkAddr() {
         addrService.check();
+    }
+
+    @Override
+    public void showRpcContextMessage(){
+        System.out.println("---------------------- consumer start --------------------------");
+//        RpcContextUtil.showRpcContextMessage();
+
+        RpcContext.getServiceContext().setAttachment("index","1");
+        RpcContext.getServiceContext().setAttachment("name","lhw");
+        consumerService.showRpcContextInfo();
+//        RpcContextUtil.showRpcContextMessage();
+
+        System.out.println("---------------------- consumer end --------------------------");
     }
 
 }

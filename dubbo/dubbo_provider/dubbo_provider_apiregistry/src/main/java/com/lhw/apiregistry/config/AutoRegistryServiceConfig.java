@@ -1,12 +1,14 @@
 package com.lhw.apiregistry.config;
 
 import com.lhw.apiregistry.handler.ApiRegistryHandler;
-import com.lhw.apiregistry.service.AddrServiceImpl;
-import com.lhw.apiregistry.service.UserServiceImpl;
-import com.lhw.apiregistry.service.UserServiceImpl2;
-import com.lhw.dubbo_api.service.AddrService;
-import com.lhw.dubbo_api.service.UserService;
-import org.springframework.context.annotation.Bean;
+//import com.lhw.apiregistry.service.AddrServiceImpl;
+//import com.lhw.apiregistry.service.UserServiceImpl;
+//import com.lhw.apiregistry.service.UserServiceImpl2;
+//import com.lhw.dubbo_api.service.AddrService;
+//import com.lhw.dubbo_api.service.UserService;
+//import org.springframework.context.annotation.Bean;
+import com.lhw.apiregistry.service.RpcContextServiceImpl;
+import com.lhw.dubbo_api.service.RpcContextService;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -28,14 +30,16 @@ public class AutoRegistryServiceConfig {
     @PostConstruct
     public void registryService(){
         //初始化几个服务
-        AddrService addrService = new AddrServiceImpl();
-        UserService userServiceImpl1 = new UserServiceImpl();
-        UserService userServiceImpl2 = new UserServiceImpl2();
+//        AddrService addrService = new AddrServiceImpl();
+//        UserService userServiceImpl1 = new UserServiceImpl();
+//        UserService userServiceImpl2 = new UserServiceImpl2();
+        RpcContextService rpcContextService = new RpcContextServiceImpl();
 
         //暴露服务，注册到注册中心
-        apiRegistryHandler.registryService(AddrService.class,addrService);
-        apiRegistryHandler.registryService(UserService.class,userServiceImpl1);
+//        apiRegistryHandler.registryService(AddrService.class,addrService);
+//        apiRegistryHandler.registryService(UserService.class,userServiceImpl1);
 //        apiRegistryHandler.registryService(UserService.class,userServiceImpl2);
+        apiRegistryHandler.registryService(RpcContextService.class, rpcContextService);
     }
 
 }

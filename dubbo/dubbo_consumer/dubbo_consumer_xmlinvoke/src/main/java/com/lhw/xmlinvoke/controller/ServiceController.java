@@ -46,6 +46,10 @@ public class ServiceController {
         return "success";
     }
 
+    /**
+     * 回声测试
+     * @return
+     */
     @RequestMapping("echo/test")
     public String echoTest(){
         System.out.println("autoAnnotation start");
@@ -54,6 +58,12 @@ public class ServiceController {
         System.out.println();
         System.out.println("referenceInject start");
         referenceInject.echoTest();
+        return "success";
+    }
+
+    @RequestMapping("/rpcContext")
+    public String rpcContext(){
+        autoAnnotation.showRpcContextMessage();
         return "success";
     }
 

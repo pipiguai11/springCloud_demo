@@ -8,4 +8,6 @@ public interface UserService {
 
     public List<User> userInfo();
 
+    void showRpcContextInfo();
+
 }
