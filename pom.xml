@@ -19,6 +19,7 @@
         <module>nacos_demo</module>
         <module>gateway</module>
         <module>dubbo</module>
+        <module>swagger</module>
     </modules>
 
     <description>Demo project for Spring Boot</description>
