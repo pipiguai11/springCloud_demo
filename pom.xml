@@ -34,6 +34,7 @@
         <spring.cloud.resilience4j>2.0.2</spring.cloud.resilience4j>
         <fastjson.version>1.2.68</fastjson.version>
         <spring.boot.data.redis.reactive>2.4.5</spring.boot.data.redis.reactive>
+        <spring-fox.version>3.0.0</spring-fox.version>
     </properties>
 
 
@@ -119,6 +120,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${spring-fox.version}</version>
             </dependency>
 
         </dependencies>
