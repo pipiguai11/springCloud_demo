@@ -1,0 +1,8 @@
+rpc:
+  register:
+    address: 127.0.0.1:8848
+    port: 11111
+    type: nacos
+logging:
+  level:
+    com.lhw: info

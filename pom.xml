@@ -20,6 +20,8 @@
         <module>gateway</module>
         <module>dubbo</module>
         <module>swagger</module>
+        <module>netty_demo</module>
+        <module>my_rpc_frame</module>
     </modules>
 
     <description>Demo project for Spring Boot</description>
