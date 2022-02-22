@@ -8,10 +8,10 @@ package com.lhw.rpc_api.test;
  */
 public interface IService {
 
-    public void hello();
+    String hello(String msg);
 
-    public String getMessage();
+    String getMessage();
 
-    public void testError();
+    String testError();
 
 }

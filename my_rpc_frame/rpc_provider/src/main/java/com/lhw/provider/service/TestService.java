@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 public class TestService implements IService {
 
     @Override
-    public void hello() {
-        System.out.println("hello world ,My Service");
+    public String hello(String msg) {
+        return "hello world" + msg;
     }
 
     @Override
@@ -25,8 +25,13 @@ public class TestService implements IService {
     }
 
     @Override
-    public void testError() {
-        int i = 1 / 0;
+    public String testError() {
+        try {
+            int i = 1 / 0;
+        }catch (Exception e){
+            return e.getMessage();
+        }
+        return "error";
     }
 
 

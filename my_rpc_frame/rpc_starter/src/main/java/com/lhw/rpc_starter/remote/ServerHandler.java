@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 //@Slf4j
 public class ServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
-    private static Logger log = LoggerFactory.getLogger(ClientHandler.class);
+    private static Logger log = LoggerFactory.getLogger(ServerHandler.class);
 
     /**
      * 新的客户端连接事件
@@ -38,7 +38,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
      */
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("channelRegistered 注册了一个通道");
         log.info("Server channelRegistered 通道注册事件 | channel={} remote={}",ctx.channel().id(),ctx.channel().remoteAddress());
     }
 

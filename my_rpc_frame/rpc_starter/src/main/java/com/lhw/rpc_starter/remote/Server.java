@@ -29,7 +29,6 @@ public class Server {
         System.out.println("服务端Socket正在启动监听");
         EventLoopGroup parentGroup = new NioEventLoopGroup(1);
         EventLoopGroup clientGroup = new NioEventLoopGroup();
-        ServerHandler handler = new ServerHandler();
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(parentGroup, clientGroup)
@@ -41,7 +40,7 @@ public class Server {
                             ch.pipeline()
                                     .addLast(new RpcDecoder(RpcRequest.class))
                                     .addLast(new RpcEncoder(RpcResponse.class))
-                                    .addLast(handler);
+                                    .addLast(new ServerHandler());
                         }
                     });
             //启动服务并监听port端口

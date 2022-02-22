@@ -64,10 +64,15 @@ public class ClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
     public RpcResponse getRpcResponse() {
         try {
             latch.await();
+            return this.rpcResponse;
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }finally {
+            //每次获取完结果之后就把CountDownLatch重置为1，为下次的RPC调用做准备，否则rpcResponse没有覆盖到就返回了，会是上一次请求的rpcResponse
+            //不过这种方式有一个问题，那就是只能是串行的处理RPC请求，不能并行.
+            latch = new CountDownLatch(1);
         }
-        return this.rpcResponse;
+        return null;
     }
 
 }
