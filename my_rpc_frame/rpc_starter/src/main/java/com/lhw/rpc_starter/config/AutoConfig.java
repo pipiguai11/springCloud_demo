@@ -4,6 +4,10 @@ import com.lhw.rpc_starter.condition.EnableZookeeperRegister;
 import com.lhw.rpc_starter.listener.RpcApplicationListener;
 import com.lhw.rpc_starter.proxy.InvokeProxy;
 import com.lhw.rpc_starter.register.*;
+import com.lhw.rpc_starter.register.nacos.NacosDiscovery;
+import com.lhw.rpc_starter.register.nacos.NacosRegister;
+import com.lhw.rpc_starter.register.zookeeper.ZookeeperDiscovery;
+import com.lhw.rpc_starter.register.zookeeper.ZookeeperRegister;
 import com.lhw.rpc_starter.remote.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,32 +35,41 @@ public class AutoConfig {
         return new Server(property.getPort());
     }
 
-    @Bean
+    //    注册中心选择开始
+    @Bean("registry")
     @Conditional(EnableZookeeperRegister.class)
-    public Register zookeeperRegister() {
-        return new ZookeeperRegister();
+    public Register zookeeperRegister(@Autowired RegisterProperty property) {
+        return new ZookeeperRegister(property);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
+    @Bean("discovery")
+    @Conditional(EnableZookeeperRegister.class)
+    public Discovery zookeeperDiscovery(@Autowired RegisterProperty property){
+        return new ZookeeperDiscovery(property);
+    }
+
+    @Bean("registry")
+    @ConditionalOnMissingBean(Register.class)
     public Register nacosRegister(RegisterProperty registerProperty) {
         return new NacosRegister(registerProperty);
     }
 
-    @Bean
+    @Bean("discovery")
     @ConditionalOnMissingBean
-    public Discovery nacosDisvocery(RegisterProperty registerProperty) {
+    public Discovery nacosDiscovery(RegisterProperty registerProperty) {
         return new NacosDiscovery(registerProperty);
     }
 
+    //    注册中心选择结束
+
     @Bean
-    public InvokeProxy invokeProxy(@Autowired Discovery discovery) {
+    public InvokeProxy invokeProxy(@Qualifier("discovery") @Autowired Discovery discovery) {
         return new InvokeProxy(discovery);
     }
 
     @Bean
     public RpcApplicationListener rpcApplicationListener(RegisterProperty registerProperty,
-                                                         @Autowired @Qualifier("nacosRegister") Register register,
+                                                         @Autowired @Qualifier("registry") Register register,
                                                          InvokeProxy invokeProxy,
                                                          Server server) {
         return new RpcApplicationListener(registerProperty, register, invokeProxy, server);

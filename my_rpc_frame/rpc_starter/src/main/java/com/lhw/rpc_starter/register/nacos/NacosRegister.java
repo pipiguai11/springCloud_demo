@@ -1,10 +1,12 @@
-package com.lhw.rpc_starter.register;
+package com.lhw.rpc_starter.register.nacos;
 
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.lhw.rpc_starter.model.Service;
+import com.lhw.rpc_starter.register.Register;
+import com.lhw.rpc_starter.register.RegisterProperty;
 
 /**
  * @author ：linhw
@@ -17,6 +19,7 @@ public class NacosRegister implements Register {
     private NamingService namingService;
 
     public NacosRegister(RegisterProperty registerProperty) {
+        System.out.println("Nacos 注册中心启动");
         try {
             namingService = NamingFactory.createNamingService(registerProperty.getAddress());
         } catch (NacosException e) {

@@ -1,9 +1,11 @@
-package com.lhw.rpc_starter.register;
+package com.lhw.rpc_starter.register.nacos;
 
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.lhw.rpc_starter.model.Service;
+import com.lhw.rpc_starter.register.Discovery;
+import com.lhw.rpc_starter.register.RegisterProperty;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +21,7 @@ public class NacosDiscovery implements Discovery {
     private NamingService namingService;
 
     public NacosDiscovery(RegisterProperty property) {
+        System.out.println("nacos 发现服务启动");
         try {
             namingService = NamingFactory.createNamingService(property.getAddress());
         } catch (NacosException e) {

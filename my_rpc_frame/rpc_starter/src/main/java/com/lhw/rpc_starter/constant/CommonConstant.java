@@ -13,7 +13,11 @@ public class CommonConstant {
         public static String DEFAULT_ADDRESS = "127.0.0.1:8848";
         public static int DEFAULT_PORT = 11111;
 
+        public static String PROVIDER = "provider";
+        public static String CONSUMER = "consumer";
+
         public static String ZOOKEEPER_TYPE = "zookeeper";
+        public static String ZOOKEEPER_NODE_PREFIX = "/lhw";
     }
 
 }
