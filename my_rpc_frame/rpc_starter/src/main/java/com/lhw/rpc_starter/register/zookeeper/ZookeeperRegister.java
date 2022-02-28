@@ -28,7 +28,6 @@ public class ZookeeperRegister implements Register {
     public void register(Service service) {
         String path = CommonConstant.Register.ZOOKEEPER_NODE_PREFIX + "/"
                 + service.getServiceName() + "/" + CommonConstant.Register.PROVIDER;
-        ZookeeperUtil.queryStat(zooKeeper,path);
         ZookeeperUtil.cascadeCreateNode(zooKeeper, path, JSON.toJSONString(service));
     }
 }

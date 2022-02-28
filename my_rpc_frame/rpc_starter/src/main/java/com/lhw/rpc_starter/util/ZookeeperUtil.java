@@ -76,6 +76,10 @@ public class ZookeeperUtil {
 
     public static void cascadeCreateNode(ZooKeeper zooKeeper, String nodePath, String nodeData){
         String[] nodes = nodePath.split("/");
+        if (nodes.length < 2 || Objects.isNull(nodeData) || Objects.isNull(zooKeeper)){
+            log.error("参数错误，请检查");
+            return;
+        }
         int index = 0;
         StringBuilder tempPath = new StringBuilder();
         while (++index < nodes.length){
