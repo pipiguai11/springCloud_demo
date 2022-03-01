@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>my_rpc_frame</artifactId>
+    <packaging>pom</packaging>
 
     <modules>
         <module>rpc_provider</module>
