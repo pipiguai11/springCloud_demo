@@ -22,6 +22,7 @@
         <module>swagger</module>
         <module>netty_demo</module>
         <module>my_rpc_frame</module>
+        <module>spring_security</module>
     </modules>
 
     <description>Demo project for Spring Boot</description>
